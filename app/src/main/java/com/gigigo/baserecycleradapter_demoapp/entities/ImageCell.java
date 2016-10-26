@@ -4,7 +4,7 @@ package com.gigigo.baserecycleradapter_demoapp.entities;
  * Created by rui.alonso on 26/10/16.
  */
 
-public class ImageCell extends Cell {
+public class ImageCell {
   String url;
 
   public ImageCell(String url) {

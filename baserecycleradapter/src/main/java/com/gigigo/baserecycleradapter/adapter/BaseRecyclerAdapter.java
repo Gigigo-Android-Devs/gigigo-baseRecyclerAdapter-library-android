@@ -9,6 +9,7 @@ import com.gigigo.ui.imageloader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("rawtypes")
 public class BaseRecyclerAdapter<V> extends RecyclerView.Adapter<BaseViewHolder> {
 
   private BaseViewHolderFactory viewHolderFactory;
@@ -76,7 +77,7 @@ public class BaseRecyclerAdapter<V> extends RecyclerView.Adapter<BaseViewHolder>
     this.itemDragListener = itemDragListener;
   }
 
-  @Override public void onBindViewHolder(BaseViewHolder holder, int position) {
+  @SuppressWarnings("unchecked") @Override public void onBindViewHolder(BaseViewHolder holder, int position) {
     holder.bindTo(data.get(position), position);
   }
 
