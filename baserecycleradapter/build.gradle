@@ -8,8 +8,8 @@ android {
     minSdkVersion rootProject.ext.androidMinSdkVersion
     targetSdkVersion rootProject.ext.androidTargetSdkVersion
 
-    versionCode 100000
-    versionName "1.0"
+    versionCode 100100
+    versionName "1.1"
   }
   buildTypes {
     release {
