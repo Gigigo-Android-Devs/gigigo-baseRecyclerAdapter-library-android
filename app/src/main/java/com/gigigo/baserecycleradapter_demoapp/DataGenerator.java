@@ -1,5 +1,6 @@
 package com.gigigo.baserecycleradapter_demoapp;
 
+import com.gigigo.baserecycleradapter_demoapp.entities.Cell;
 import com.gigigo.baserecycleradapter_demoapp.entities.ImageCell;
 import com.gigigo.baserecycleradapter_demoapp.entities.TextCell;
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ public class DataGenerator {
   private static String[] categories =
       new String[] { "animals", "architecture", "nature", "people", "tech" };
 
-  public static List<Object> generateRandomDataList(int num) {
-    ArrayList<Object> data = new ArrayList<>();
+  public static List<Cell> generateRandomDataList(int num) {
+    ArrayList<Cell> data = new ArrayList<>();
     for (int i = 0; i < num; i++) {
       if (i % 2 == 0) {
         data.add(generateRandomImageData());

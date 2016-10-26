@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.gigigo.baserecycleradapter.adapter.BaseRecyclerAdapter;
+import com.gigigo.baserecycleradapter_demoapp.entities.Cell;
 import com.gigigo.baserecycleradapter_demoapp.entities.ImageCell;
 import com.gigigo.baserecycleradapter_demoapp.entities.TextCell;
 import com.gigigo.baserecycleradapter_demoapp.viewholder.ImageViewHolder;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     adapter.clear();
   }
 
-  private void fillData(List<?> data) {
+  private void fillData(List<Cell> data) {
     adapter.append(data);
   }
 }
