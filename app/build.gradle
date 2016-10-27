@@ -9,8 +9,8 @@ android {
     minSdkVersion rootProject.ext.androidMinSdkVersion
     targetSdkVersion rootProject.ext.androidTargetSdkVersion
 
-    versionCode 100201
-    versionName "1.2.1"
+    versionCode 100300
+    versionName "1.3"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
   buildTypes {

@@ -8,8 +8,8 @@ android {
     minSdkVersion rootProject.ext.androidMinSdkVersion
     targetSdkVersion rootProject.ext.androidTargetSdkVersion
 
-    versionCode 100100
-    versionName "1.1"
+    versionCode 100300
+    versionName "1.3"
   }
   buildTypes {
     release {
@@ -22,6 +22,4 @@ android {
 dependencies {
   compile rootProject.ext.libraries.androidSupportV7
   compile rootProject.ext.libraries.recyclerViewV7
-
-  compile rootProject.ext.libraries.imageloaderGlide
 }

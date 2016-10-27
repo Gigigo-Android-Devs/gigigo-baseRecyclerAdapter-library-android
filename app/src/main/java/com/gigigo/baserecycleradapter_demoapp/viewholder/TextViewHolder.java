@@ -8,17 +8,12 @@ import android.widget.Toast;
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder;
 import com.gigigo.baserecycleradapter_demoapp.R;
 import com.gigigo.baserecycleradapter_demoapp.entities.TextCell;
-import com.gigigo.ui.imageloader.ImageLoader;
 
 public class TextViewHolder extends BaseViewHolder<TextCell> {
 
   private TextView textView;
 
   public TextViewHolder(Context context, ViewGroup parent) {
-    this(context, parent, null);
-  }
-
-  public TextViewHolder(Context context, ViewGroup parent, ImageLoader imageLoader) {
     super(context, parent, R.layout.widget_text_content_item);
 
     textView = (TextView) itemView.findViewById(R.id.text_view);

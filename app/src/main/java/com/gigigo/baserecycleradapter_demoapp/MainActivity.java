@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
   private RecyclerView recyclerView;
   private BaseRecyclerAdapter adapter;
 
+  private ImageLoader imageLoader;
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
@@ -44,15 +46,15 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
+    RequestManager requestManager = Glide.with(this);
+    imageLoader = new GlideImageLoaderImp(requestManager);
+
     initAdapter();
     initRecyclerView();
   }
 
   private void initAdapter() {
-    RequestManager requestManager = Glide.with(this);
-    ImageLoader imageLoader = new GlideImageLoaderImp(requestManager);
-
-    adapter = new BaseRecyclerAdapter(this, imageLoader);
+    adapter = new BaseRecyclerAdapter(this);
     adapter.bind(ImageCell.class, ImageViewHolder.class);
     adapter.bind(TextCell.class, TextViewHolder.class);
   }
@@ -69,5 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
   @SuppressWarnings("unchecked") private void fillData(List<Object> data) {
     adapter.append(data);
+  }
+
+  public ImageLoader getImageLoader() {
+    return imageLoader;
   }
 }

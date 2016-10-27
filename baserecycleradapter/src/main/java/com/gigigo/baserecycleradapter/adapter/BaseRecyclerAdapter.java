@@ -5,12 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder;
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolderFactory;
-import com.gigigo.ui.imageloader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("rawtypes")
-public class BaseRecyclerAdapter<V> extends RecyclerView.Adapter<BaseViewHolder> {
+@SuppressWarnings("rawtypes") public class BaseRecyclerAdapter<V>
+    extends RecyclerView.Adapter<BaseViewHolder> {
 
   private BaseViewHolderFactory viewHolderFactory;
   private List<Class> valueClassTypes = new ArrayList<>();
@@ -29,10 +28,6 @@ public class BaseRecyclerAdapter<V> extends RecyclerView.Adapter<BaseViewHolder>
 
   public BaseRecyclerAdapter(Context context) {
     this(new BaseViewHolderFactory(context));
-  }
-
-  public BaseRecyclerAdapter(Context context, ImageLoader imageLoader) {
-    this(new BaseViewHolderFactory(context, imageLoader));
   }
 
   public BaseRecyclerAdapter(BaseViewHolderFactory baseBaseViewHolderFactory, Class valueClass,
@@ -77,7 +72,8 @@ public class BaseRecyclerAdapter<V> extends RecyclerView.Adapter<BaseViewHolder>
     this.itemDragListener = itemDragListener;
   }
 
-  @SuppressWarnings("unchecked") @Override public void onBindViewHolder(BaseViewHolder holder, int position) {
+  @SuppressWarnings("unchecked") @Override
+  public void onBindViewHolder(BaseViewHolder holder, int position) {
     holder.bindTo(data.get(position), position);
   }
 
