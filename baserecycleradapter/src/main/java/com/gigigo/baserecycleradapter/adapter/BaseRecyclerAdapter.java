@@ -100,7 +100,7 @@ import java.util.List;
   }
 
   public void append(List<V> items) {
-    data.addAll(items);
+    append(items);
     notifyDataSetChanged();
   }
 
