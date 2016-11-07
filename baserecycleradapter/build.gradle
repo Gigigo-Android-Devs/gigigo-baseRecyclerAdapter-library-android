@@ -9,7 +9,7 @@ android {
     targetSdkVersion rootProject.ext.androidTargetSdkVersion
 
     versionCode generateVersionCode()
-    versionName generateVersionName(1,4,1)
+    versionName generateVersionName(1,4,2)
   }
   buildTypes {
     release {
