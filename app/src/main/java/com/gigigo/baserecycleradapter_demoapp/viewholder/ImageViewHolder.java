@@ -28,6 +28,15 @@ public class ImageViewHolder extends BaseViewHolder<ImageCell> {
     bindListeners();
   }
 
+  public ImageViewHolder(Context context, ViewGroup parent, ImageLoader imageLoader) {
+    super(context, parent, R.layout.widget_image_content_item);
+
+    this.imageLoader = imageLoader;
+    imageView = (ImageView) itemView.findViewById(R.id.image_view);
+
+    bindListeners();
+  }
+
   public void bindListeners() {
     setItemClickListener(new OnItemClickListener() {
       @Override public void onItemClick(int position, View view) {

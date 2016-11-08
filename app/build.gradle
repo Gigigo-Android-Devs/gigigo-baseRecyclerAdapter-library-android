@@ -10,7 +10,7 @@ android {
     targetSdkVersion rootProject.ext.androidTargetSdkVersion
 
     versionCode generateVersionCode()
-    versionName generateVersionName(1,1,3)
+    versionName generateVersionName(1,2,0)
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
   buildTypes {

@@ -11,6 +11,7 @@ import com.bumptech.glide.RequestManager;
 import com.gigigo.baserecycleradapter.adapter.BaseRecyclerAdapter;
 import com.gigigo.baserecycleradapter_demoapp.entities.ImageCell;
 import com.gigigo.baserecycleradapter_demoapp.entities.TextCell;
+import com.gigigo.baserecycleradapter_demoapp.factory.CustomViewHolderFactory;
 import com.gigigo.baserecycleradapter_demoapp.viewholder.ImageViewHolder;
 import com.gigigo.baserecycleradapter_demoapp.viewholder.TextViewHolder;
 import com.gigigo.ui.imageloader.ImageLoader;
@@ -54,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void initAdapter() {
-    adapter = new BaseRecyclerAdapter(this);
+    CustomViewHolderFactory customViewHolderFactory = new CustomViewHolderFactory(this, imageLoader);
+    adapter = new BaseRecyclerAdapter(customViewHolderFactory);
     adapter.bind(ImageCell.class, ImageViewHolder.class);
     adapter.bind(TextCell.class, TextViewHolder.class);
   }
