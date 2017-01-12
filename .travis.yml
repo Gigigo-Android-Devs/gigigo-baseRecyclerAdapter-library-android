@@ -2,7 +2,7 @@ language: android
 jdk: oraclejdk8
 env:
   global:
-  - ANDROID_TARGET=android-15
+  - ANDROID_TARGET=android-23
   - ANDROID_ABI=armeabi-v7a
 android:
   components:
@@ -12,6 +12,6 @@ android:
     - android-23
     - extra-android-support
     - extra-google-m2repository
-    - sys-img-armeabi-v7a-android-19
+    - sys-img-armeabi-v7a-android-23
     - extra-android-m2repository
 
