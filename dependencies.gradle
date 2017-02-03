@@ -4,7 +4,7 @@ allprojects {
                  androidSupportDesign: 'com.android.support:design:23.3.0',
                  recyclerViewV7      : 'com.android.support:recyclerview-v7:23.3.0',
 
-                 imageloaderGlide    : 'com.github.Gigigo-Android-Devs.imageLoader:imageloader-glide:v1.0']
+                 imageloaderGlide    : 'com.github.Gigigo-Android-Devs.imageLoader:imageloader-glide:1.2.6']
 
     testLibraries = [mockito          : 'org.mockito:mockito-core:2.0.31-beta',
                      junit            : 'junit:junit:4.12',

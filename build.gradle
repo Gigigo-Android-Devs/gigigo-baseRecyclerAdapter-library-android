@@ -19,7 +19,7 @@ allprojects {
   ext {
     androidCompileSdkVersion = 23
     androidBuildToolsVersion = '23.0.0'
-    androidMinSdkVersion = 18
+    androidMinSdkVersion = 10
     androidTargetSdkVersion = 23
   }
 
