@@ -15,7 +15,8 @@ import com.gigigo.baserecycleradapter_demoapp.factory.CustomViewHolderFactory;
 import com.gigigo.baserecycleradapter_demoapp.viewholder.ImageViewHolder;
 import com.gigigo.baserecycleradapter_demoapp.viewholder.TextViewHolder;
 import com.gigigo.ui.imageloader.ImageLoader;
-import com.gigigo.ui.imageloader_glide.GlideImageLoaderImp;
+
+import com.gigigo.ui.imageloader.glide.GlideImageLoaderImp;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
         clearData();
       }
     });
-
-    RequestManager requestManager = Glide.with(this);
-    imageLoader = new GlideImageLoaderImp(requestManager);
+    imageLoader = new GlideImageLoaderImp(this);
 
     initAdapter();
     initRecyclerView();
