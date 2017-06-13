@@ -17,10 +17,10 @@ buildscript {
 
 allprojects {
   ext {
-    androidCompileSdkVersion = 23
-    androidBuildToolsVersion = '23.0.0'
+    androidCompileSdkVersion = 24
+    androidBuildToolsVersion = '24.0.3'
     androidMinSdkVersion = 10
-    androidTargetSdkVersion = 23
+    androidTargetSdkVersion = 24
   }
 
   repositories {

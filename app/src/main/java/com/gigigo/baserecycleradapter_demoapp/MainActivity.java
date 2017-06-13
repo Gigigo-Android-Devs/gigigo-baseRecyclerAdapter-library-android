@@ -6,9 +6,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.gigigo.baserecycleradapter.adapter.BaseRecyclerAdapter;
+import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder;
 import com.gigigo.baserecycleradapter_demoapp.entities.ImageCell;
 import com.gigigo.baserecycleradapter_demoapp.entities.TextCell;
 import com.gigigo.baserecycleradapter_demoapp.factory.CustomViewHolderFactory;
@@ -58,12 +60,18 @@ public class MainActivity extends AppCompatActivity {
     adapter = new BaseRecyclerAdapter(customViewHolderFactory);
     adapter.bind(ImageCell.class, ImageViewHolder.class);
     adapter.bind(TextCell.class, TextViewHolder.class);
+    adapter.setItemClickListener(new BaseViewHolder.OnItemClickListener() {
+      @Override public void onItemClick(int position, View view) {
+        Toast.makeText(MainActivity.this, "Pulsado: "+ position, Toast.LENGTH_SHORT).show();
+      }
+    });
   }
 
   private void initRecyclerView() {
     recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+
   }
 
   public void clearData() {
