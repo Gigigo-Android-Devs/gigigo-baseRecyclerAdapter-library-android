@@ -22,6 +22,7 @@ import java.util.List;
   private BaseViewHolder.OnItemClickListener itemClickListener;
   private BaseViewHolder.OnItemLongClickListener itemLongClickListener;
   private BaseViewHolder.OnItemDragListener itemDragListener;
+  private long millisIntervalToAvoidDoubleClick;
 
   public BaseRecyclerAdapter(Context context, Class valueClass,
       Class<? extends BaseViewHolder> viewHolderClass) {
@@ -63,7 +64,7 @@ import java.util.List;
   }
 
   public void setItemClickListener(final BaseViewHolder.OnItemClickListener itemClickListener) {
-    this.itemClickListener = new DebouncedOnClickListener() {
+    this.itemClickListener = new DebouncedOnClickListener(millisIntervalToAvoidDoubleClick) {
       @Override public boolean onDebouncedClick(View v, int position) {
         if (itemClickListener != null) {
           itemClickListener.onItemClick(position, v);
@@ -154,5 +155,9 @@ import java.util.List;
 
   @Override public int getItemCount() {
     return data.size();
+  }
+
+  public void setMillisIntervalToAvoidDoubleClick(long millisIntervalToAvoidDoubleClick) {
+    this.millisIntervalToAvoidDoubleClick = millisIntervalToAvoidDoubleClick;
   }
 }

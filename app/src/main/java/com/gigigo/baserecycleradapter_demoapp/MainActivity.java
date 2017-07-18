@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     adapter = new BaseRecyclerAdapter(customViewHolderFactory);
     adapter.bind(ImageCell.class, ImageViewHolder.class);
     adapter.bind(TextCell.class, TextViewHolder.class);
+    adapter.setMillisIntervalToAvoidDoubleClick(1500);
     adapter.setItemClickListener(new BaseViewHolder.OnItemClickListener() {
       @Override public void onItemClick(int position, View view) {
         Toast.makeText(MainActivity.this, "Pulsado: "+ position, Toast.LENGTH_SHORT).show();
