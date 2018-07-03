@@ -26,7 +26,6 @@ android:
 before_install:
   - chmod +x gradlew
   - cd $TRAVIS_BUILD_DIR/
-  - pip install --upgrade pip
   - pip install --user codecov
 
 before_script:
@@ -41,7 +40,6 @@ before_script:
 script:
   - ./gradlew build jacocoTestReport
   - ./gradlew check
-  - if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]]; then ./gradlew appliveryDeploy; fi
 
 after_success:
   - ./gradlew jacocoFullReport
