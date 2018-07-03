@@ -33,8 +33,7 @@ public abstract class BaseViewHolder<V> extends RecyclerView.ViewHolder
     this.itemClickListener = itemClickListener;
   }
 
-  public void setItemLongClickListener(
-      OnItemLongClickListener itemLongClickListener) {
+  public void setItemLongClickListener(OnItemLongClickListener itemLongClickListener) {
     this.itemLongClickListener = itemLongClickListener;
   }
 

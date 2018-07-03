@@ -1,16 +1,18 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
   compileSdkVersion rootProject.ext.androidCompileSdkVersion
-  buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
   defaultConfig {
     applicationId "com.gigigo.baserecycleradapter_demoapp"
     minSdkVersion rootProject.ext.androidMinSdkVersion
     targetSdkVersion rootProject.ext.androidTargetSdkVersion
 
-    versionCode generateVersionCode()
-    versionName generateVersionName(1,2,0)
+    versionCode generateAutoVersionCode()
+    versionName generateVersionName([major: 2, minor: 0, patch: 0])
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
@@ -26,9 +28,9 @@ android {
 }
 
 dependencies {
-  compile rootProject.ext.libraries.androidSupportV7
-  compile rootProject.ext.libraries.androidSupportDesign
+  implementation rootProject.ext.libraries.androidSupportV7
+  implementation rootProject.ext.libraries.androidSupportDesign
 
-  compile rootProject.ext.modules.baserecycleradapter
-  compile rootProject.ext.libraries.imageloaderGlide
+  api rootProject.ext.modules.baserecycleradapter
+  implementation rootProject.ext.libraries.imageloaderGlide
 }

@@ -1,10 +1,12 @@
 allprojects {
   ext {
-    libraries = [androidSupportV7    : 'com.android.support:appcompat-v7:23.3.0',
-                 androidSupportDesign: 'com.android.support:design:23.3.0',
-                 recyclerViewV7      : 'com.android.support:recyclerview-v7:23.3.0',
+    supportVersion = '27.1.1'
 
-                 imageloaderGlide    : 'com.github.Gigigo-Android-Devs.imageLoader:imageloader-glide:v1.0']
+    libraries = [androidSupportV7    : "com.android.support:appcompat-v7:${supportVersion}",
+                 androidSupportDesign: "com.android.support:design:${supportVersion}",
+                 recyclerViewV7      : "com.android.support:recyclerview-v7:${supportVersion}",
+
+                 imageloaderGlide    : 'com.github.Gigigo-Android-Devs.gigigo-imageLoader-library-android:imageloader-glide:1.1']
 
     testLibraries = [mockito          : 'org.mockito:mockito-core:2.0.31-beta',
                      junit            : 'junit:junit:4.12',
