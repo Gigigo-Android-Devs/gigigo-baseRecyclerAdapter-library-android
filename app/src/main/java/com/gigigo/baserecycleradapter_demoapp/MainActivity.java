@@ -6,16 +6,19 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.gigigo.baserecycleradapter.adapter.BaseRecyclerAdapter;
+import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder;
 import com.gigigo.baserecycleradapter_demoapp.entities.ImageCell;
 import com.gigigo.baserecycleradapter_demoapp.entities.TextCell;
 import com.gigigo.baserecycleradapter_demoapp.factory.CustomViewHolderFactory;
 import com.gigigo.baserecycleradapter_demoapp.viewholder.ImageViewHolder;
 import com.gigigo.baserecycleradapter_demoapp.viewholder.TextViewHolder;
 import com.gigigo.ui.imageloader.ImageLoader;
-import com.gigigo.ui.imageloader_glide.GlideImageLoaderImp;
+
+import com.gigigo.ui.imageloader.glide.GlideImageLoaderImp;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,9 +49,7 @@ public class MainActivity extends AppCompatActivity {
         clearData();
       }
     });
-
-    RequestManager requestManager = Glide.with(this);
-    imageLoader = new GlideImageLoaderImp(requestManager);
+    imageLoader = new GlideImageLoaderImp(this);
 
     initAdapter();
     initRecyclerView();
@@ -59,12 +60,19 @@ public class MainActivity extends AppCompatActivity {
     adapter = new BaseRecyclerAdapter(customViewHolderFactory);
     adapter.bind(ImageCell.class, ImageViewHolder.class);
     adapter.bind(TextCell.class, TextViewHolder.class);
+    adapter.setMillisIntervalToAvoidDoubleClick(1500);
+    adapter.setItemClickListener(new BaseViewHolder.OnItemClickListener() {
+      @Override public void onItemClick(int position, View view) {
+        Toast.makeText(MainActivity.this, "Pulsado: "+ position, Toast.LENGTH_SHORT).show();
+      }
+    });
   }
 
   private void initRecyclerView() {
     recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+
   }
 
   public void clearData() {

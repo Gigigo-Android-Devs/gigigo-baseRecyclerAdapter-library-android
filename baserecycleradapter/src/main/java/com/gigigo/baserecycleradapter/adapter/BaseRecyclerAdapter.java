@@ -2,7 +2,10 @@ package com.gigigo.baserecycleradapter.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
+import com.gigigo.baserecycleradapter.debouncedlisteners.DebouncedOnClickListener;
+import com.gigigo.baserecycleradapter.debouncedlisteners.DebouncedOnLongClickListener;
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder;
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolderFactory;
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import java.util.List;
   private BaseViewHolder.OnItemClickListener itemClickListener;
   private BaseViewHolder.OnItemLongClickListener itemLongClickListener;
   private BaseViewHolder.OnItemDragListener itemDragListener;
+  private long millisIntervalToAvoidDoubleClick;
 
   public BaseRecyclerAdapter(Context context, Class valueClass,
       Class<? extends BaseViewHolder> viewHolderClass) {
@@ -59,13 +63,27 @@ import java.util.List;
     }
   }
 
-  public void setItemClickListener(BaseViewHolder.OnItemClickListener itemClickListener) {
-    this.itemClickListener = itemClickListener;
+  public void setItemClickListener(final BaseViewHolder.OnItemClickListener itemClickListener) {
+    this.itemClickListener = new DebouncedOnClickListener(millisIntervalToAvoidDoubleClick) {
+      @Override public boolean onDebouncedClick(View v, int position) {
+        if (itemClickListener != null) {
+          itemClickListener.onItemClick(position, v);
+        }
+        return true;
+      }
+    };
   }
 
   public void setItemLongClickListener(
-      BaseViewHolder.OnItemLongClickListener itemLongClickListener) {
-    this.itemLongClickListener = itemLongClickListener;
+      final BaseViewHolder.OnItemLongClickListener itemLongClickListener) {
+    this.itemLongClickListener = new DebouncedOnLongClickListener() {
+      @Override public boolean onDebouncedClick(View v, int position) {
+        if (itemLongClickListener != null) {
+          return itemLongClickListener.onItemLongClicked(position, v);
+        }
+        return false;
+      }
+    };
   }
 
   public void setItemDragListener(BaseViewHolder.OnItemDragListener itemDragListener) {
@@ -137,5 +155,9 @@ import java.util.List;
 
   @Override public int getItemCount() {
     return data.size();
+  }
+
+  public void setMillisIntervalToAvoidDoubleClick(long millisIntervalToAvoidDoubleClick) {
+    this.millisIntervalToAvoidDoubleClick = millisIntervalToAvoidDoubleClick;
   }
 }

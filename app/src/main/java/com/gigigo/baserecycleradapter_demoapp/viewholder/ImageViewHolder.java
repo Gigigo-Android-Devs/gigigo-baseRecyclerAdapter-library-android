@@ -5,14 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder;
 import com.gigigo.baserecycleradapter_demoapp.MainActivity;
 import com.gigigo.baserecycleradapter_demoapp.R;
 import com.gigigo.baserecycleradapter_demoapp.entities.ImageCell;
 import com.gigigo.ui.imageloader.ImageLoader;
-import com.gigigo.ui.imageloader_glide.GlideImageLoaderImp;
+
 
 public class ImageViewHolder extends BaseViewHolder<ImageCell> {
 
@@ -61,6 +59,6 @@ public class ImageViewHolder extends BaseViewHolder<ImageCell> {
   }
 
   @Override public void bindTo(ImageCell item, int position) {
-    imageLoader.load(item.getUrl(), imageView, R.color.colorAccent);
+    imageLoader.load(item.getUrl()).placeholder( R.color.colorAccent).error( R.color.colorAccent).into(imageView);
   }
 }
