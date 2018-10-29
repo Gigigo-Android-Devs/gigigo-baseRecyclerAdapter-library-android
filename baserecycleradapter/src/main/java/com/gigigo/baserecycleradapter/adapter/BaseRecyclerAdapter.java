@@ -1,6 +1,7 @@
 package com.gigigo.baserecycleradapter.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -98,11 +99,11 @@ import java.util.List;
     this.itemDragListener = itemDragListener;
   }
 
-  @SuppressWarnings("unchecked") @Override
-  public void onBindViewHolder(BaseViewHolder holder, int position) {
-    boolean validIndex = isValidIndex(position);
-    if (validIndex) {
+  @Override public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+    try {
       holder.bindTo(data.get(position), position);
+    } catch (Exception e) {
+      Log.e("BaseRecyclerAdapter", "onBindViewHolder()", e);
     }
   }
 
