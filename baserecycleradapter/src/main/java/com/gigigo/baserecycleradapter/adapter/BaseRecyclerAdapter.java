@@ -51,7 +51,11 @@ import java.util.List;
   }
 
   @Override public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    BaseViewHolder viewHolder = viewHolderFactory.create(valueClassTypes.get(viewType), parent);
+    int index = viewType;
+    if (!isValidIndex(viewType)) {
+      index = 0;
+    }
+    BaseViewHolder viewHolder = viewHolderFactory.create(valueClassTypes.get(index), parent);
     bindListeners(viewHolder);
     return viewHolder;
   }
