@@ -2,6 +2,7 @@ package com.gigigo.baserecycleradapter.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import com.gigigo.baserecycleradapter.debouncedlisteners.DebouncedOnClickListener;
@@ -67,7 +68,10 @@ import java.util.List;
     this.itemClickListener = new DebouncedOnClickListener(millisIntervalToAvoidDoubleClick) {
       @Override public boolean onDebouncedClick(View v, int position) {
         if (itemClickListener != null) {
-          itemClickListener.onItemClick(position, v);
+          boolean validIndex = isValidIndex(position);
+          if (validIndex) {
+            itemClickListener.onItemClick(position, v);
+          }
         }
         return true;
       }
@@ -92,11 +96,20 @@ import java.util.List;
 
   @SuppressWarnings("unchecked") @Override
   public void onBindViewHolder(BaseViewHolder holder, int position) {
-    holder.bindTo(data.get(position), position);
+    boolean validIndex = isValidIndex(position);
+    if (validIndex) {
+      holder.bindTo(data.get(position), position);
+    }
   }
 
   @Override public int getItemViewType(int position) {
-    return valueClassTypes.indexOf(data.get(position).getClass());
+    boolean validIndex = isValidIndex(position);
+    if (validIndex) {
+      return valueClassTypes.indexOf(data.get(position).getClass());
+    } else {
+      Log.e("BaseRecyclerAdapter", "getItemViewType()");
+      return 0;
+    }
   }
 
   public void add(V item) {
@@ -124,7 +137,12 @@ import java.util.List;
 
   public boolean remove(V item) {
     int position = getIndex(item);
-    return removeAt(position);
+    boolean validIndex = isValidIndex(position);
+    if (validIndex) {
+      return removeAt(position);
+    } else {
+      return false;
+    }
   }
 
   public boolean removeAt(int position) {
@@ -150,7 +168,12 @@ import java.util.List;
   }
 
   public V getItem(int position) {
-    return data.get(position);
+    boolean validIndex = isValidIndex(position);
+    if (validIndex) {
+      return data.get(position);
+    } else {
+      return null;
+    }
   }
 
   @Override public int getItemCount() {
