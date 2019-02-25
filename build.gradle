@@ -3,24 +3,23 @@ apply from: 'common_methods.gradle'
 apply from: 'dependencies.gradle'
 
 buildscript {
-  ext.kotlin_version = '1.2.50'
+  ext {
+    kotlin_version = '1.3.21'
+    gradle_plugin = '3.3.1'
+  }
+
   repositories {
     google()
     jcenter()
   }
+
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.1.3'
+    classpath "com.android.tools.build:gradle:$gradle_plugin"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
 }
 
 allprojects {
-  ext {
-    androidCompileSdkVersion = 27
-    androidMinSdkVersion = 18
-    androidTargetSdkVersion = 27
-  }
-
   repositories {
     google()
     jcenter()

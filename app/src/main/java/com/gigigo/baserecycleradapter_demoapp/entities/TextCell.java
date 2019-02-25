@@ -5,17 +5,17 @@ package com.gigigo.baserecycleradapter_demoapp.entities;
  */
 
 public class TextCell {
-  String text;
+    String text;
 
-  public TextCell(String text) {
-    this.text = text;
-  }
+    public TextCell(String text) {
+        this.text = text;
+    }
 
-  public String getText() {
-    return text;
-  }
+    public String getText() {
+        return text;
+    }
 
-  public void setText(String text) {
-    this.text = text;
-  }
+    public void setText(String text) {
+        this.text = text;
+    }
 }

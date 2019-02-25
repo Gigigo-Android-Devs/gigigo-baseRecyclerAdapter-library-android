@@ -1,1 +1,1 @@
-include ':baserecycleradapter'//, ':app'
+include ':baserecycleradapter', ':app'

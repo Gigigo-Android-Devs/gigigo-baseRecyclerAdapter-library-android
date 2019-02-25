@@ -4,33 +4,32 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-  compileSdkVersion rootProject.ext.androidCompileSdkVersion
+    compileSdkVersion androidSdk.compile
 
-  defaultConfig {
-    applicationId "com.gigigo.baserecycleradapter_demoapp"
-    minSdkVersion rootProject.ext.androidMinSdkVersion
-    targetSdkVersion rootProject.ext.androidTargetSdkVersion
+    defaultConfig {
+        minSdkVersion androidSdk.min
+        targetSdkVersion androidSdk.target
+        applicationId "com.gigigo.baserecycleradapter_demoapp"
 
-    versionCode generateAutoVersionCode()
-    versionName generateVersionName([major: 2, minor: 0, patch: 0])
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-  }
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        versionCode generateAutoVersionCode()
+        versionName generateVersionName([major: 2, minor: 0, patch: 0])
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-  }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 
-  lintOptions {
-    abortOnError false
-  }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-  implementation rootProject.ext.libraries.androidSupportV7
-  implementation rootProject.ext.libraries.androidSupportDesign
+    implementation "androidx.appcompat:appcompat:$libraries.appcompat"
+    implementation 'com.github.Gigigo-Android-Devs.imageLoader:imageloader-glide:2.06.2'
 
-  api rootProject.ext.modules.baserecycleradapter
-  implementation rootProject.ext.libraries.imageloaderGlide
+    api rootProject.ext.modules.baserecycleradapter
 }

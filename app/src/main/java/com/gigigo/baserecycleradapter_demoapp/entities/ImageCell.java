@@ -5,17 +5,17 @@ package com.gigigo.baserecycleradapter_demoapp.entities;
  */
 
 public class ImageCell {
-  String url;
+    String url;
 
-  public ImageCell(String url) {
-    this.url = url;
-  }
+    public ImageCell(String url) {
+        this.url = url;
+    }
 
-  public String getUrl() {
-    return url;
-  }
+    public String getUrl() {
+        return url;
+    }
 
-  public void setUrl(String url) {
-    this.url = url;
-  }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

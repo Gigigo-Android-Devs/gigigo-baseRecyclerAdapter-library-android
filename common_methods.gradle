@@ -66,7 +66,7 @@ ext {
 
     if (field instanceof Map) {
       if (field["$buildType"] == null) {
-        println("not defined explicit param value for \'${key}\' in \'${buildType}\' configuration. Using first value founded")
+        println("not defined explicit param value for \'${key}\' in \'${buildType}\' configuration. Using first value found")
         value = field.entrySet().toList().first().getValue()
       } else {
         value = field["$buildType"]
