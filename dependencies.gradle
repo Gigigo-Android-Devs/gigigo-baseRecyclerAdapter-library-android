@@ -8,7 +8,7 @@ allprojects {
 
         libraries = [appcompat   : '1.1.0-alpha02',
                      recyclerView: '1.1.0-alpha02',
-                     annotations        : '15.0']
+                     annotations : '15.0']
 
         testLibraries = [junit       : '4.12',
                          runner      : '1.1.2-alpha01',
