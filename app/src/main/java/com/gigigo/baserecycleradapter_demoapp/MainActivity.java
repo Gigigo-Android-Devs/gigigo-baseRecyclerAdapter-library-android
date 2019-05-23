@@ -65,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         adapter.bind(TextCell.class, TextViewHolder.class);
         adapter.setMillisIntervalToAvoidDoubleClick(1500);
         adapter.setItemClickListener(new BaseViewHolder.OnItemClickListener() {
+            /*@Override
+            public <T> void onItemClick(int position, T element) {
+                Toast.makeText(MainActivity.this, "Pulsado: " + position + " data: " + element.toString(), Toast.LENGTH_SHORT).show();
+            }*/
+
             @Override
             public void onItemClick(int position, View view) {
                 Toast.makeText(MainActivity.this, "Pulsado: " + position, Toast.LENGTH_SHORT).show();

@@ -10,6 +10,11 @@ import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder;
 import com.gigigo.baserecycleradapter_demoapp.R;
 import com.gigigo.baserecycleradapter_demoapp.entities.TextCell;
 
+import org.jetbrains.annotations.NotNull;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
+
 public class TextViewHolder extends BaseViewHolder<TextCell> {
 
     private TextView textView;

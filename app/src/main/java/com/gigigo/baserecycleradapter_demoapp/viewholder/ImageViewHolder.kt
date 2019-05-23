@@ -39,13 +39,16 @@ class ImageViewHolder : BaseViewHolder<ImageCell> {
         this.imageLoader = imageLoader
         imageView = itemView.findViewById<View>(R.id.image_view) as ImageView
 
-        imageView!!.setOnClickListener { v -> this@ImageViewHolder.onClick(v) }
+        imageView!!.setOnClickListener { v ->
+            this@ImageViewHolder.onClick(v)
+            /*onClick(Integer(2))*/
+        }
 
         bindListeners()
     }
 
     fun bindListeners() {
-        setItemClickListener<Any>(object : OnItemClickListener {
+        setItemClickListener(object : OnItemClickListener {
             override fun onItemClick(position: Int, view: View) {
                 Toast.makeText(
                     view.context, "Clicked position: $layoutPosition",
@@ -53,7 +56,7 @@ class ImageViewHolder : BaseViewHolder<ImageCell> {
                 ).show()
             }
         })
-        setItemLongClickListener(object : BaseViewHolder.OnItemLongClickListener {
+        setItemLongClickListener(object : OnItemLongClickListener {
             override fun onItemLongClicked(position: Int, view: View): Boolean {
                 Toast.makeText(
                     view.context, "Long clicked position: $layoutPosition",
@@ -62,7 +65,7 @@ class ImageViewHolder : BaseViewHolder<ImageCell> {
                 return false
             }
         })
-        setItemDragListener(object : BaseViewHolder.OnItemDragListener {
+        setItemDragListener(object : OnItemDragListener {
             override fun OnItemDragged(position: Int, view: View): Boolean {
                 Toast.makeText(
                     view.context, "Dragged position: $layoutPosition",
