@@ -76,6 +76,7 @@ public class BaseRecyclerAdapter<V>
 
     public void setItemClickListener(final BaseViewHolder.OnItemClickListener itemClickListener) {
         this.itemClickListener = new DebouncedOnClickListener(millisIntervalToAvoidDoubleClick) {
+
             @Override
             public boolean onDebouncedClick(View v, int position) {
                 if (itemClickListener != null) {
