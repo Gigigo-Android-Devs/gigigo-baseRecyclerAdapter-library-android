@@ -16,7 +16,7 @@ class BaseRecyclerAdapter<V : Any>(private val viewHolderFactory: BaseViewHolder
 
     private val valueClassTypes = ArrayList<Class<*>>()
     private val _data = ArrayList<V>()
-    val data: List<V>
+    val data: Collection<V>
         get() = _data
 
     private var itemClickListener: BaseViewHolder.OnItemClickListener? = null
@@ -128,12 +128,12 @@ class BaseRecyclerAdapter<V : Any>(private val viewHolderFactory: BaseViewHolder
         }
     }
 
-    fun addAll(items: List<V>) {
+    fun addAll(items: Collection<V>) {
         _data.clear()
         append(items)
     }
 
-    fun append(items: List<V>) {
+    fun append(items: Collection<V>) {
         _data.addAll(items)
         notifyDataSetChanged()
     }
