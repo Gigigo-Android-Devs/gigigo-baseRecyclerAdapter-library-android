@@ -27,9 +27,9 @@ public class CustomViewHolderFactory extends BaseViewHolderFactory {
     @Override
     public BaseViewHolder create(Class valueClass, ViewGroup parent) {
         if (valueClass == ImageCell.class) {
-            return new ImageViewHolder(context, parent, imageLoader);
+            return new ImageViewHolder(getContext(), parent, imageLoader);
         } else if (valueClass == TextCell.class) {
-            return new TextViewHolder(context, parent);
+            return new TextViewHolder(getContext(), parent);
         } else {
             return null;
         }

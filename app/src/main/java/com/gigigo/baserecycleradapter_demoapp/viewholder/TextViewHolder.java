@@ -10,11 +10,6 @@ import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder;
 import com.gigigo.baserecycleradapter_demoapp.R;
 import com.gigigo.baserecycleradapter_demoapp.entities.TextCell;
 
-import org.jetbrains.annotations.NotNull;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
-
 public class TextViewHolder extends BaseViewHolder<TextCell> {
 
     private TextView textView;
@@ -24,31 +19,12 @@ public class TextViewHolder extends BaseViewHolder<TextCell> {
 
         textView = (TextView) itemView.findViewById(R.id.text_view);
 
-        bindListeners();
-    }
-
-    public void bindListeners() {
-        setItemClickListener(new OnItemClickListener() {
+        //Note: besides viewholder onClick, textview has an own onClick
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(int position, View view) {
-                Toast.makeText(view.getContext(), "Clicked position: " + getLayoutPosition(),
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Text clicked: " + ((TextView) v).getText(),
                         Toast.LENGTH_SHORT).show();
-            }
-        });
-        setItemLongClickListener(new OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClicked(int position, View view) {
-                Toast.makeText(view.getContext(), "Long clicked position: " + getLayoutPosition(),
-                        Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-        setItemDragListener(new OnItemDragListener() {
-            @Override
-            public boolean OnItemDragged(int position, View view) {
-                Toast.makeText(view.getContext(), "Dragged position: " + getLayoutPosition(),
-                        Toast.LENGTH_SHORT).show();
-                return false;
             }
         });
     }

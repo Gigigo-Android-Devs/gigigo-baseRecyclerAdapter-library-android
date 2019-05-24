@@ -5,6 +5,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.gigigo.baserecycleradapter.adapter.BaseRecyclerAdapter;
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder;
 import com.gigigo.baserecycleradapter_demoapp.entities.ImageCell;
@@ -15,11 +19,9 @@ import com.gigigo.baserecycleradapter_demoapp.viewholder.TextViewHolder;
 import com.gigigo.ui.imageloader.ImageLoader;
 import com.gigigo.ui.imageloader.glide.GlideImageLoaderImp;
 
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -65,14 +67,24 @@ public class MainActivity extends AppCompatActivity {
         adapter.bind(TextCell.class, TextViewHolder.class);
         adapter.setMillisIntervalToAvoidDoubleClick(1500);
         adapter.setItemClickListener(new BaseViewHolder.OnItemClickListener() {
-            /*@Override
-            public <T> void onItemClick(int position, T element) {
-                Toast.makeText(MainActivity.this, "Pulsado: " + position + " data: " + element.toString(), Toast.LENGTH_SHORT).show();
-            }*/
-
             @Override
             public void onItemClick(int position, View view) {
-                Toast.makeText(MainActivity.this, "Pulsado: " + position, Toast.LENGTH_SHORT).show();
+                Object element = adapter.getItem(position);
+                Toast.makeText(MainActivity.this, "Item " + view.getClass().getSimpleName() + " clicked: " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+        adapter.setItemLongClickListener(new BaseViewHolder.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClicked(int position, View view) {
+                Toast.makeText(MainActivity.this, "Item " + view.getClass().getSimpleName() + " long clicked: " + position, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        adapter.setItemDragListener(new BaseViewHolder.OnItemDragListener() {
+            @Override
+            public boolean OnItemDragged(int position, @NotNull View view) {
+                Toast.makeText(MainActivity.this, "Item " + view.getClass().getSimpleName() + " dragged: " + position, Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
     }

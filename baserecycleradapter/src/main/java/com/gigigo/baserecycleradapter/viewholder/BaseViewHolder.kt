@@ -8,7 +8,7 @@ import android.view.ViewGroup
 
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseViewHolder<Data: Any> : RecyclerView.ViewHolder, View.OnLongClickListener,
+abstract class BaseViewHolder<Data : Any> : RecyclerView.ViewHolder, View.OnLongClickListener,
     View.OnClickListener, View.OnDragListener {
 
     private var itemClickListener: OnItemClickListener? = null
@@ -31,27 +31,18 @@ abstract class BaseViewHolder<Data: Any> : RecyclerView.ViewHolder, View.OnLongC
         itemView.setOnDragListener(this)
     }
 
-    /*
-    fun <T>setItemClickListener(itemClickListener: OnItemClickListener) {
-        this.itemClickListener = itemClickListener
-    }
-    */
-    fun setItemClickListener(itemClickListener: OnItemClickListener) {
+    fun setItemClickListener(itemClickListener: OnItemClickListener?) {
         this.itemClickListener = itemClickListener
     }
 
-    fun setItemLongClickListener(itemLongClickListener: OnItemLongClickListener) {
+    fun setItemLongClickListener(itemLongClickListener: OnItemLongClickListener?) {
         this.itemLongClickListener = itemLongClickListener
     }
 
-    fun setItemDragListener(itemDragClickListener: OnItemDragListener) {
+    fun setItemDragListener(itemDragClickListener: OnItemDragListener?) {
         this.itemDragListener = itemDragClickListener
     }
-/*
-    fun <T> onClick(data: T) {
-        itemClickListener?.onItemClick(layoutPosition, data)
-    }
-*/
+
     override fun onClick(v: View) {
         itemClickListener?.onItemClick(layoutPosition, v)
     }
@@ -74,7 +65,6 @@ abstract class BaseViewHolder<Data: Any> : RecyclerView.ViewHolder, View.OnLongC
 
     interface OnItemClickListener {
         fun onItemClick(position: Int, view: View)
-        /*fun <T>onItemClick(position: Int, element: T) = { }*/
     }
 
     interface OnItemLongClickListener {

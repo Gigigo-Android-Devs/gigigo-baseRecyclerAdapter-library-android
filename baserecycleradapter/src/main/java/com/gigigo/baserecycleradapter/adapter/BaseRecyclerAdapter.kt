@@ -40,27 +40,39 @@ class BaseRecyclerAdapter<V : Any>(private val viewHolderFactory: BaseViewHolder
         bind(valueClass, viewHolderClass)
     }
 
-    fun bind(valueClass: Class<*>, viewHolderClass: Class<out BaseViewHolder<*>>) {
-        valueClassTypes.add(valueClass)
-        viewHolderFactory.bind(valueClass, viewHolderClass)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Any> {
         var index = viewType
         if (!isValidIndex(viewType)) {
             index = 0
+            Log.w("BaseRecyclerAdapter", "onCreateViewHolder() invalid type")
         }
         val viewHolder = viewHolderFactory.create(valueClassTypes[index], parent)
         bindListeners(viewHolder)
         return viewHolder
     }
 
-    private fun bindListeners(viewHolder: BaseViewHolder<*>?) {
-        viewHolder?.apply {
-            setItemClickListener(itemClickListener)
-            setItemLongClickListener(itemLongClickListener)
-            setItemDragListener(itemDragListener)
+    override fun onBindViewHolder(holder: BaseViewHolder<Any>, position: Int) {
+        try {
+            holder.bindTo(_data[position], position)
+        } catch (e: Exception) {
+            Log.e("BaseRecyclerAdapter", "onBindViewHolder()", e)
         }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (isValidIndex(position)) {
+            valueClassTypes.indexOf(_data[position].javaClass)
+        } else {
+            Log.w("BaseRecyclerAdapter", "getItemViewType invalid index position $position")
+            0
+        }
+    }
+
+    override fun getItemCount(): Int = _data.size
+
+    fun bind(valueClass: Class<*>, viewHolderClass: Class<out BaseViewHolder<Any>>) {
+        valueClassTypes.add(valueClass)
+        viewHolderFactory.bind(valueClass, viewHolderClass)
     }
 
     fun setItemClickListener(itemClickListener: BaseViewHolder.OnItemClickListener?) {
@@ -97,23 +109,8 @@ class BaseRecyclerAdapter<V : Any>(private val viewHolderFactory: BaseViewHolder
     }
 
     fun setItemDragListener(itemDragListener: BaseViewHolder.OnItemDragListener?) {
-        itemDragListener?.let { this.itemDragListener = it }
-    }
-
-    override fun onBindViewHolder(holder: BaseViewHolder<Any>, position: Int) {
-        try {
-            holder.bindTo(_data[position], position)
-        } catch (e: Exception) {
-            Log.e("BaseRecyclerAdapter", "onBindViewHolder()", e)
-        }
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return if (isValidIndex(position)) {
-            valueClassTypes.indexOf(_data[position].javaClass)
-        } else {
-            Log.e("BaseRecyclerAdapter", "getItemViewType invalid index position $position")
-            0
+        itemDragListener?.let {
+            this.itemDragListener = it
         }
     }
 
@@ -167,9 +164,6 @@ class BaseRecyclerAdapter<V : Any>(private val viewHolderFactory: BaseViewHolder
         notifyDataSetChanged()
     }
 
-    private fun isValidIndex(position: Int): Boolean = position in 0 until itemCount
-
-    override fun getItemCount(): Int = _data.size
 
     fun getIndex(item: V): Int = _data.indexOf(item)
 
@@ -184,5 +178,15 @@ class BaseRecyclerAdapter<V : Any>(private val viewHolderFactory: BaseViewHolder
 
     fun setMillisIntervalToAvoidDoubleClick(millisIntervalToAvoidDoubleClick: Long) {
         this.millisIntervalToAvoidDoubleClick = millisIntervalToAvoidDoubleClick
+    }
+
+    private fun isValidIndex(position: Int): Boolean = position in 0 until itemCount
+
+    private fun bindListeners(viewHolder: BaseViewHolder<Any>?) {
+        viewHolder?.apply {
+            setItemClickListener(itemClickListener)
+            setItemLongClickListener(itemLongClickListener)
+            setItemDragListener(itemDragListener)
+        }
     }
 }
