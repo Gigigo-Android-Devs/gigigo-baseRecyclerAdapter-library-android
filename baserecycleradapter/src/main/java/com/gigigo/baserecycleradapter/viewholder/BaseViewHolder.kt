@@ -8,7 +8,7 @@ import android.view.ViewGroup
 
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseViewHolder<Data : Any> : RecyclerView.ViewHolder, View.OnLongClickListener,
+abstract class BaseViewHolder<Data> : RecyclerView.ViewHolder, View.OnLongClickListener,
     View.OnClickListener, View.OnDragListener {
 
     private var itemClickListener: OnItemClickListener? = null
@@ -56,7 +56,7 @@ abstract class BaseViewHolder<Data : Any> : RecyclerView.ViewHolder, View.OnLong
 
     override fun onDrag(v: View, event: DragEvent): Boolean {
         return itemDragListener?.let { dragListener ->
-            dragListener.OnItemDragged(layoutPosition, v)
+            dragListener.onItemDragged(layoutPosition, v)
             true
         } ?: false
     }
@@ -72,6 +72,6 @@ abstract class BaseViewHolder<Data : Any> : RecyclerView.ViewHolder, View.OnLong
     }
 
     interface OnItemDragListener {
-        fun OnItemDragged(position: Int, view: View): Boolean
+        fun onItemDragged(position: Int, view: View): Boolean
     }
 }

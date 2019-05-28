@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         });
         adapter.setItemDragListener(new BaseViewHolder.OnItemDragListener() {
             @Override
-            public boolean OnItemDragged(int position, @NotNull View view) {
+            public boolean onItemDragged(int position, @NotNull View view) {
                 Toast.makeText(MainActivity.this, "Item " + view.getClass().getSimpleName() + " dragged: " + position, Toast.LENGTH_SHORT).show();
                 return true;
             }
