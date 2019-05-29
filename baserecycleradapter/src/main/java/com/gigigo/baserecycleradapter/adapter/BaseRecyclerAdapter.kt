@@ -167,7 +167,7 @@ class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFacto
         this.millisIntervalToAvoidDoubleClick = millisIntervalToAvoidDoubleClick
     }
 
-    private fun isValidIndex(position: Int): Boolean = position in 0 until itemCount
+    private fun isValidIndex(position: Int): Boolean = position in 0..itemCount
 
     private fun bindListeners(viewHolder: BaseViewHolder<Data>?) {
         viewHolder?.apply {
