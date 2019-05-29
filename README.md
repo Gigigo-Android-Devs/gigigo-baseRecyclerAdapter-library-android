@@ -11,7 +11,32 @@ BaseAdapter for RecyclerView with ViewHolder Factory
 
 ## How to use it
 ### ViewHolder
+``` 
+class MyViewHolder1(
+    private val context: Context,
+    parent: ViewGroup,
+    private val otherComponent: OtherComponent
+) : BaseViewHolder<MyModel>(context, parent, R.layout.item_layout) {
 
+    private val elementView = itemView.findViewById<View>(R.id.element_view)
+
+    override fun bindTo(item: MyModel1, position: Int) {
+        elementView?.setOnClickListener { view ->
+            //in this case, we propagate click to viewholder
+            onClick(view)
+        }
+        elementView?.setOnLongClickListener { view ->
+            //never propagate to adapter due to imageview match-parent
+            Toast.makeText(
+                view.context, "Image long clicked position: $layoutPosition",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            true
+        }
+    }
+}
+```
 ---
 
 ### ViewHolderFactory
@@ -21,7 +46,7 @@ BaseAdapter for RecyclerView with ViewHolder Factory
         private val otherComponent: OtherComponent
     ) : BaseViewHolderFactory(context) {
 
-    override fun create(valueClass: Class<*>, parent: ViewGroup): BaseViewHolder<Any> {
+    override fun create(valueClass: Class<*>, parent: ViewGroup): BaseViewHolder<*> {
         return if (valueClass == MyModel1::class.java) {
             MyViewHolder1(context, parent, otherComponent)
         } else if (valueClass == MyModel1::class.java) {
@@ -47,10 +72,10 @@ or from a `BaseViewHolderFactory` if you need more parameters to construct custo
     val myAdapter = BaseRecyclerAdapter(myViewHolderFactory)
 ```
 
-Bind `Model` to `ViewHolder`. Can bind many models to different viewholders
+Bind `Model` to `ViewHolder`. Can bind many models to different viewholders. Model and viewholder classes go by reified types
 ```
-    myAdapter.bind(MyModel::class.java, MyViewHolder::class.java)
-    myAdapter.bind(MyModel2::class.java, MyViewHolder2::class.java)
+    myAdapter.bind<MyModel, MyViewHolder>()
+    myAdapter.bind<MyModel2, MyViewHolder2>()
 ``` 
 
 #### Methods
@@ -70,15 +95,15 @@ Set click listeners for click events from viewholders (click, longclick, dragg):
 
 to modify adapter data: 
 ```
-    fun add(item: V)
+    fun add(item: Data)
 
-    fun addAt(item: V, position: Int)
+    fun addAt(item: Data, position: Int)
 
-    fun addAll(items: Collection<V>) //Clear and add
+    fun addAll(items: Collection<Data>) //Clear and add
 
-    fun append(items: Collection<V>) 
+    fun append(items: Collection<Data>) 
 
-    fun remove(item: V)
+    fun remove(item: Data)
 
     fun removeAt(position: Int)
 

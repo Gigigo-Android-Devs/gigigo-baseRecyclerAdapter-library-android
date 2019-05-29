@@ -20,8 +20,8 @@ class CustomViewHolderFactory(context: Context, private val imageLoader: ImageLo
 
     override fun create(valueClass: Class<*>, parent: ViewGroup): BaseViewHolder<*> {
         return when (valueClass) {
-            ImageCell::class.java -> ImageViewHolder(context, parent, imageLoader) as BaseViewHolder<Any>
-            TextCell::class.java -> TextViewHolder(context, parent) as BaseViewHolder<Any>
+            ImageCell::class.java -> ImageViewHolder(context, parent, imageLoader)
+            TextCell::class.java -> TextViewHolder(context, parent)
             else -> super.create(valueClass, parent)
         }
     }
