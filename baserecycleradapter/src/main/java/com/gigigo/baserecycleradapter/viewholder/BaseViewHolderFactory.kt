@@ -24,7 +24,7 @@ open class BaseViewHolderFactory(protected var context: Context) {
         }
     }
 
-    inline fun <reified V: Any, reified VH: BaseViewHolder<V>> bind() {
-        boundViewHolders[V::class.java] = VH::class.java
+    inline fun <reified Data: Any, reified ViewHolder: BaseViewHolder<Data>> bind() {
+        boundViewHolders[Data::class.java] = ViewHolder::class.java
     }
 }

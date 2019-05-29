@@ -11,12 +11,12 @@ import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolderFactory
 import java.util.*
 
-class BaseRecyclerAdapter<V : Any>(val viewHolderFactory: BaseViewHolderFactory) :
-    RecyclerView.Adapter<BaseViewHolder<V>>() {
+class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFactory) :
+    RecyclerView.Adapter<BaseViewHolder<Data>>() {
 
     val valueClassTypes = ArrayList<Class<*>>()
-    private val _data = ArrayList<V>()
-    val data: Collection<V>
+    private val _data = ArrayList<Data>()
+    val data: Collection<Data>
         get() = _data
 
     private var itemClickListener: BaseViewHolder.OnItemClickListener? = null
@@ -26,19 +26,19 @@ class BaseRecyclerAdapter<V : Any>(val viewHolderFactory: BaseViewHolderFactory)
 
     constructor(context: Context) : this(BaseViewHolderFactory(context)) {}
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<V> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Data> {
         var index = viewType
         if (!isValidIndex(viewType)) {
             index = 0
             Log.w("BaseRecyclerAdapter", "onCreateViewHolder() invalid type")
         }
         val viewHolder =
-            viewHolderFactory.create(valueClassTypes[index], parent) as BaseViewHolder<V>
+            viewHolderFactory.create(valueClassTypes[index], parent) as BaseViewHolder<Data>
         bindListeners(viewHolder)
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<V>, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder<Data>, position: Int) {
         try {
             holder.bindTo(_data[position], position)
         } catch (e: Exception) {
@@ -57,9 +57,9 @@ class BaseRecyclerAdapter<V : Any>(val viewHolderFactory: BaseViewHolderFactory)
 
     override fun getItemCount(): Int = _data.size
 
-    inline fun <reified V : Any, reified VH : BaseViewHolder<V>> bind() {
-        valueClassTypes.add(V::class.java)
-        viewHolderFactory.bind<V, VH>()
+    inline fun <reified Data : Any, reified ViewHolder : BaseViewHolder<Data>> bind() {
+        valueClassTypes.add(Data::class.java)
+        viewHolderFactory.bind<Data, ViewHolder>()
     }
 
     fun setItemClickListener(itemClickListener: BaseViewHolder.OnItemClickListener?) {
@@ -101,13 +101,13 @@ class BaseRecyclerAdapter<V : Any>(val viewHolderFactory: BaseViewHolderFactory)
         }
     }
 
-    fun add(item: V) {
+    fun add(item: Data) {
         val lastPosition = itemCount - 1
         _data.add(item)
         notifyItemInserted(lastPosition)
     }
 
-    fun addAt(item: V, position: Int) {
+    fun addAt(item: Data, position: Int) {
         val validIndex = isValidIndex(position)
         if (validIndex) {
             _data.add(position, item)
@@ -115,17 +115,17 @@ class BaseRecyclerAdapter<V : Any>(val viewHolderFactory: BaseViewHolderFactory)
         }
     }
 
-    fun addAll(items: Collection<V>) {
+    fun addAll(items: Collection<Data>) {
         _data.clear()
         append(items)
     }
 
-    fun append(items: Collection<V>) {
+    fun append(items: Collection<Data>) {
         _data.addAll(items)
         notifyDataSetChanged()
     }
 
-    fun remove(item: V): Boolean {
+    fun remove(item: Data): Boolean {
         val position = getIndex(item)
         val validIndex = isValidIndex(position)
         return if (validIndex) {
@@ -152,9 +152,9 @@ class BaseRecyclerAdapter<V : Any>(val viewHolderFactory: BaseViewHolderFactory)
     }
 
 
-    fun getIndex(item: V): Int = _data.indexOf(item)
+    fun getIndex(item: Data): Int = _data.indexOf(item)
 
-    fun getItem(position: Int): V? {
+    fun getItem(position: Int): Data? {
         val validIndex = isValidIndex(position)
         return if (validIndex) {
             _data[position]
@@ -169,7 +169,7 @@ class BaseRecyclerAdapter<V : Any>(val viewHolderFactory: BaseViewHolderFactory)
 
     private fun isValidIndex(position: Int): Boolean = position in 0 until itemCount
 
-    private fun bindListeners(viewHolder: BaseViewHolder<V>?) {
+    private fun bindListeners(viewHolder: BaseViewHolder<Data>?) {
         viewHolder?.apply {
             setItemClickListener(itemClickListener)
             setItemLongClickListener(itemLongClickListener)
