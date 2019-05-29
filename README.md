@@ -5,7 +5,11 @@
 BaseAdapter for RecyclerView with ViewHolder Factory
 
 ## Version
-2.2.0
+2.2.1
+### Gradle
+```
+implementation "com.github.Gigigo-Android-Devs:baserecycleradapter:2.2.1"
+```
 
 [EasyRecyclerAdapter]: <https://github.com/CarlosMChica/easyrecycleradapters>
 
