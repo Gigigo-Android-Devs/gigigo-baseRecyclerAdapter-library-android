@@ -11,10 +11,10 @@ import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolderFactory
 import java.util.*
 
-class BaseRecyclerAdapter<V : Any>(private val viewHolderFactory: BaseViewHolderFactory) :
-    RecyclerView.Adapter<BaseViewHolder<Any>>() {
+class BaseRecyclerAdapter<V : Any>(val viewHolderFactory: BaseViewHolderFactory) :
+    RecyclerView.Adapter<BaseViewHolder<V>>() {
 
-    private val valueClassTypes = ArrayList<Class<*>>()
+    val valueClassTypes = ArrayList<Class<*>>()
     private val _data = ArrayList<V>()
     val data: Collection<V>
         get() = _data
@@ -26,32 +26,19 @@ class BaseRecyclerAdapter<V : Any>(private val viewHolderFactory: BaseViewHolder
 
     constructor(context: Context) : this(BaseViewHolderFactory(context)) {}
 
-    constructor(
-        context: Context, valueClass: Class<*>,
-        viewHolderClass: Class<out BaseViewHolder<Any>>
-    ) : this(context) {
-        bind(valueClass, viewHolderClass)
-    }
-
-    constructor(
-        baseBaseViewHolderFactory: BaseViewHolderFactory, valueClass: Class<*>,
-        viewHolderClass: Class<out BaseViewHolder<Any>>
-    ) : this(baseBaseViewHolderFactory) {
-        bind(valueClass, viewHolderClass)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Any> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<V> {
         var index = viewType
         if (!isValidIndex(viewType)) {
             index = 0
             Log.w("BaseRecyclerAdapter", "onCreateViewHolder() invalid type")
         }
-        val viewHolder = viewHolderFactory.create(valueClassTypes[index], parent)
+        val viewHolder =
+            viewHolderFactory.create(valueClassTypes[index], parent) as BaseViewHolder<V>
         bindListeners(viewHolder)
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<Any>, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder<V>, position: Int) {
         try {
             holder.bindTo(_data[position], position)
         } catch (e: Exception) {
@@ -70,9 +57,9 @@ class BaseRecyclerAdapter<V : Any>(private val viewHolderFactory: BaseViewHolder
 
     override fun getItemCount(): Int = _data.size
 
-    fun bind(valueClass: Class<*>, viewHolderClass: Class<out BaseViewHolder<Any>>) {
-        valueClassTypes.add(valueClass)
-        viewHolderFactory.bind(valueClass, viewHolderClass)
+    inline fun <reified V : Any, reified VH : BaseViewHolder<V>> bind() {
+        valueClassTypes.add(V::class.java)
+        viewHolderFactory.bind<V, VH>()
     }
 
     fun setItemClickListener(itemClickListener: BaseViewHolder.OnItemClickListener?) {
@@ -182,7 +169,7 @@ class BaseRecyclerAdapter<V : Any>(private val viewHolderFactory: BaseViewHolder
 
     private fun isValidIndex(position: Int): Boolean = position in 0 until itemCount
 
-    private fun bindListeners(viewHolder: BaseViewHolder<Any>?) {
+    private fun bindListeners(viewHolder: BaseViewHolder<V>?) {
         viewHolder?.apply {
             setItemClickListener(itemClickListener)
             setItemLongClickListener(itemLongClickListener)

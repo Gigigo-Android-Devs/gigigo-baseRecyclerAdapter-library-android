@@ -7,12 +7,12 @@ import java.util.*
 
 open class BaseViewHolderFactory(protected var context: Context) {
 
-    private val boundViewHolders = HashMap<Class<*>, Class<out BaseViewHolder<Any>>>()
+    val boundViewHolders = HashMap<Class<*>, Class<out BaseViewHolder<*>>>()
 
-    open fun create(valueClass: Class<*>, parent: ViewGroup): BaseViewHolder<Any> {
+    open fun create(valueClass: Class<*>, parent: ViewGroup): BaseViewHolder<*> {
         try {
             val viewHolderClass = boundViewHolders[valueClass]
-            val constructor: Constructor<out BaseViewHolder<Any>>
+            val constructor: Constructor<out BaseViewHolder<*>>
             constructor =
                 viewHolderClass!!.getDeclaredConstructor(Context::class.java, ViewGroup::class.java)
             return constructor.newInstance(context, parent)
@@ -24,7 +24,7 @@ open class BaseViewHolderFactory(protected var context: Context) {
         }
     }
 
-    fun bind(valueClass: Class<*>, viewHolderClass: Class<out BaseViewHolder<Any>>) {
-        boundViewHolders[valueClass] = viewHolderClass
+    inline fun <reified V: Any, reified VH: BaseViewHolder<V>> bind() {
+        boundViewHolders[V::class.java] = VH::class.java
     }
 }
