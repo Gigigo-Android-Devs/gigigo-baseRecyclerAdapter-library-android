@@ -49,39 +49,38 @@ class MainActivity : AppCompatActivity() {
     private fun initAdapter() {
         val customViewHolderFactory = CustomViewHolderFactory(this, imageLoader!!)
         adapter = BaseRecyclerAdapter(customViewHolderFactory)
-        adapter?.bind<ImageCell, ImageViewHolder>()
-        adapter?.bind<TextCell, TextViewHolder>()
-        adapter?.setMillisIntervalToAvoidDoubleClick(1500)
-        adapter?.setItemClickListener(object : BaseViewHolder.OnItemClickListener {
-            override fun onItemClick(position: Int, view: View) {
-                val element = adapter!!.getItem(position)
+        adapter?.run {
+            bind<ImageCell, ImageViewHolder>()
+            bind<TextCell, TextViewHolder>()
+            setMillisIntervalToAvoidDoubleClick(1500)
+
+            setItemClickListener { position, view ->
+                val element = getItem(position)
                 Toast.makeText(
                     this@MainActivity,
                     "Item " + view.javaClass.simpleName + " clicked: " + position,
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        })
-        adapter!!.setItemLongClickListener(object : BaseViewHolder.OnItemLongClickListener {
-            override fun onItemLongClicked(position: Int, view: View): Boolean {
+
+            setItemLongClickListener { position, view ->
                 Toast.makeText(
                     this@MainActivity,
                     "Item " + view.javaClass.simpleName + " long clicked: " + position,
                     Toast.LENGTH_SHORT
                 ).show()
-                return true
+                true
             }
-        })
-        adapter!!.setItemDragListener(object : BaseViewHolder.OnItemDragListener {
-            override fun OnItemDragged(position: Int, view: View): Boolean {
+
+            setItemDragListener { position, view ->
                 Toast.makeText(
                     this@MainActivity,
                     "Item " + view.javaClass.simpleName + " dragged: " + position,
                     Toast.LENGTH_SHORT
                 ).show()
-                return true
+                true
             }
-        })
+        }
     }
 
     private fun initRecyclerView() {

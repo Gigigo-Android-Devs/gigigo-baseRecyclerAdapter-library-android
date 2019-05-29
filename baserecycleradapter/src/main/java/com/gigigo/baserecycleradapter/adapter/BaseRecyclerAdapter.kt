@@ -5,10 +5,11 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.gigigo.baserecycleradapter.debouncedlisteners.DebouncedOnClickListener
-import com.gigigo.baserecycleradapter.debouncedlisteners.DebouncedOnLongClickListener
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolderFactory
+import com.gigigo.baserecycleradapter.viewholder.OnItemClickListener
+import com.gigigo.baserecycleradapter.viewholder.OnItemDragListener
+import com.gigigo.baserecycleradapter.viewholder.OnItemLongClickListener
 import java.util.*
 
 class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFactory) :
@@ -19,9 +20,9 @@ class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFacto
     val data: Collection<Data>
         get() = _data
 
-    private var itemClickListener: BaseViewHolder.OnItemClickListener? = null
-    private var itemLongClickListener: BaseViewHolder.OnItemLongClickListener? = null
-    private var itemDragListener: BaseViewHolder.OnItemDragListener? = null
+    private var itemClickListener: OnItemClickListener? = null
+    private var itemLongClickListener: OnItemLongClickListener? = null
+    private var itemDragListener: OnItemDragListener? = null
     private var millisIntervalToAvoidDoubleClick: Long = 0
 
     constructor(context: Context) : this(BaseViewHolderFactory(context)) {}
@@ -62,42 +63,33 @@ class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFacto
         viewHolderFactory.bind<Data, ViewHolder>()
     }
 
-    fun setItemClickListener(itemClickListener: BaseViewHolder.OnItemClickListener?) {
-        this.itemClickListener =
-            object : DebouncedOnClickListener(millisIntervalToAvoidDoubleClick) {
-                override fun onDebouncedClick(v: View, position: Int): Boolean {
-                    itemClickListener?.let {
-                        return if (isValidIndex(position)) {
-                            it.onItemClick(position, v)
-                            true
-                        } else {
-                            false
-                        }
-                    }
-                    return false
-                }
-            }
-    }
-
-    fun setItemLongClickListener(itemLongClickListener: BaseViewHolder.OnItemLongClickListener?) {
-        this.itemLongClickListener = object : DebouncedOnLongClickListener() {
-            override fun onDebouncedClick(v: View, position: Int): Boolean {
-                itemLongClickListener?.let {
-                    return if (isValidIndex(position)) {
-                        it.onItemLongClicked(position, v)
-                        true
-                    } else {
-                        false
-                    }
-                }
-                return false
+    fun setItemClickListener(onItemClick: (Int, View) -> Unit) {
+        itemClickListener = { position: Int, view: View ->
+            if (isValidIndex(position)) {
+                onItemClick(position, view)
             }
         }
     }
 
-    fun setItemDragListener(itemDragListener: BaseViewHolder.OnItemDragListener?) {
-        itemDragListener?.let {
-            this.itemDragListener = it
+    fun setItemLongClickListener(onItemLongClick: (Int, View) -> Boolean) {
+        itemLongClickListener = { position: Int, view: View ->
+            if (isValidIndex(position)) {
+                onItemLongClick(position, view)
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    fun setItemDragListener(onItemDragClick: (Int, View) -> Boolean) {
+        itemDragListener = { position: Int, view: View ->
+            if (isValidIndex(position)) {
+                onItemDragClick(position, view)
+                true
+            } else {
+                false
+            }
         }
     }
 
