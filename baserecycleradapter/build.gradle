@@ -1,15 +1,17 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-  compileSdkVersion rootProject.ext.androidCompileSdkVersion
-  buildToolsVersion rootProject.ext.androidBuildToolsVersion
+  compileSdkVersion androidSdk.compile
 
   defaultConfig {
-    minSdkVersion rootProject.ext.androidMinSdkVersion
-    targetSdkVersion rootProject.ext.androidTargetSdkVersion
+    minSdkVersion androidSdk.min
+    targetSdkVersion androidSdk.target
 
-    versionCode generateVersionCode()
-    versionName generateVersionName(1,4,2)
+    versionCode generateAutoVersionCode()
+    versionName generateVersionName([major:2, minor:2, patch:1])
   }
   buildTypes {
     release {
@@ -24,6 +26,6 @@ android {
 }
 
 dependencies {
-  compile rootProject.ext.libraries.androidSupportV7
-  compile rootProject.ext.libraries.recyclerViewV7
+  api "androidx.appcompat:appcompat:$libraries.appcompat"
+  api "androidx.recyclerview:recyclerview:$libraries.recyclerView"
 }

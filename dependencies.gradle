@@ -1,17 +1,25 @@
 allprojects {
-  ext {
-    libraries = [androidSupportV7    : 'com.android.support:appcompat-v7:23.3.0',
-                 androidSupportDesign: 'com.android.support:design:23.3.0',
-                 recyclerViewV7      : 'com.android.support:recyclerview-v7:23.3.0',
+    ext {
+        androidSdk = [
+                target : 28,
+                compile: 28,
+                min    : 14
+        ]
 
-                 imageloaderGlide    : 'com.github.Gigigo-Android-Devs.imageLoader:imageloader-glide:v1.0']
+        libraries = [appcompat   : '1.1.0-alpha05',
+                     recyclerView: '1.1.0-alpha05',
+                     annotations : '15.0']
 
-    testLibraries = [mockito          : 'org.mockito:mockito-core:2.0.31-beta',
-                     junit            : 'junit:junit:4.12',
-                     androidTestRunner: 'com.android.support.test:runner:0.4.1',
-                     androidTestRules : 'com.android.support.test:rules:0.4.1',
-                     espresso         : 'com.android.support.test.espresso:espresso-core:2.2.1']
+        testLibraries = [junit       : '4.12',
+                         runner      : '1.1.2-alpha01',
+                         espresso    : '3.1.2-alpha01',
+                         truth       : '0.42',
+                         androidTruth: '1.0.0',
+                         core        : '1.0.0',
+                         assertj     : '3.11.1',
+                         mockito     : '2.23.4',
+                         mockitokt   : '2.1.0']
 
-    modules = [baserecycleradapter: project(":baserecycleradapter"),]
-  }
+        modules = [baserecycleradapter: project(":baserecycleradapter")]
+    }
 }
