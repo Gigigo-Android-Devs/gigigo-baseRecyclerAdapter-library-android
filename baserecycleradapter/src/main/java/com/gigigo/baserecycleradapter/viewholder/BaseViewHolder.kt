@@ -8,6 +8,10 @@ import android.view.ViewGroup
 
 import androidx.recyclerview.widget.RecyclerView
 
+typealias OnItemClickListener = (Int, View) -> Unit
+typealias OnItemLongClickListener = (Int, View) -> Boolean
+typealias OnItemDragListener = (Int, View) -> Boolean
+
 abstract class BaseViewHolder<Data> : RecyclerView.ViewHolder, View.OnLongClickListener,
     View.OnClickListener, View.OnDragListener {
 
@@ -44,34 +48,22 @@ abstract class BaseViewHolder<Data> : RecyclerView.ViewHolder, View.OnLongClickL
     }
 
     override fun onClick(v: View) {
-        itemClickListener?.onItemClick(layoutPosition, v)
+        itemClickListener?.invoke(layoutPosition, v)
     }
 
     override fun onLongClick(v: View): Boolean {
         return itemLongClickListener?.let { longClickListener ->
-            longClickListener.onItemLongClicked(layoutPosition, itemView)
+            longClickListener.invoke(layoutPosition, itemView)
             true
         } ?: false
     }
 
     override fun onDrag(v: View, event: DragEvent): Boolean {
         return itemDragListener?.let { dragListener ->
-            dragListener.onItemDragged(layoutPosition, v)
+            dragListener.invoke(layoutPosition, v)
             true
         } ?: false
     }
 
     abstract fun bindTo(value: Data, position: Int)
-
-    interface OnItemClickListener {
-        fun onItemClick(position: Int, view: View)
-    }
-
-    interface OnItemLongClickListener {
-        fun onItemLongClicked(position: Int, view: View): Boolean
-    }
-
-    interface OnItemDragListener {
-        fun onItemDragged(position: Int, view: View): Boolean
-    }
 }

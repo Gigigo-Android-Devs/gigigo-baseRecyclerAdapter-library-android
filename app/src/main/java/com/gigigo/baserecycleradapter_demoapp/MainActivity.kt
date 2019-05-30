@@ -18,9 +18,9 @@ import com.gigigo.baserecycleradapter_demoapp.viewholder.ImageViewHolder
 import com.gigigo.baserecycleradapter_demoapp.viewholder.TextViewHolder
 import com.gigigo.ui.imageloader.ImageLoader
 import com.gigigo.ui.imageloader.glide.GlideImageLoaderImp
+import kotlinx.android.synthetic.main.activity_main.recycler_view
 
 class MainActivity : AppCompatActivity() {
-    private var recyclerView: RecyclerView? = null
     private var adapter: BaseRecyclerAdapter<Any>? = null
 
     var imageLoader: ImageLoader? = null
@@ -49,53 +49,51 @@ class MainActivity : AppCompatActivity() {
     private fun initAdapter() {
         val customViewHolderFactory = CustomViewHolderFactory(this, imageLoader!!)
         adapter = BaseRecyclerAdapter(customViewHolderFactory)
-        adapter?.bind<ImageCell, ImageViewHolder>()
-        adapter?.bind<TextCell, TextViewHolder>()
-        adapter?.setMillisIntervalToAvoidDoubleClick(1500)
-        adapter?.setItemClickListener(object : BaseViewHolder.OnItemClickListener {
-            override fun onItemClick(position: Int, view: View) {
-                val element = adapter!!.getItem(position)
+        adapter?.run {
+            bind<ImageCell, ImageViewHolder>()
+            bind<TextCell, TextViewHolder>()
+            setMillisIntervalToAvoidDoubleClick(1500)
+
+            setItemClickListener { position, view ->
+                val element = getItem(position)
                 Toast.makeText(
                     this@MainActivity,
                     "Item " + view.javaClass.simpleName + " clicked: " + position,
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        })
-        adapter!!.setItemLongClickListener(object : BaseViewHolder.OnItemLongClickListener {
-            override fun onItemLongClicked(position: Int, view: View): Boolean {
+
+            setItemLongClickListener { position, view ->
                 Toast.makeText(
                     this@MainActivity,
                     "Item " + view.javaClass.simpleName + " long clicked: " + position,
                     Toast.LENGTH_SHORT
                 ).show()
-                return true
+                true
             }
-        })
-        adapter!!.setItemDragListener(object : BaseViewHolder.OnItemDragListener {
-            override fun OnItemDragged(position: Int, view: View): Boolean {
+
+            setItemDragListener { position, view ->
                 Toast.makeText(
                     this@MainActivity,
                     "Item " + view.javaClass.simpleName + " dragged: " + position,
                     Toast.LENGTH_SHORT
                 ).show()
-                return true
+                true
             }
-        })
+        }
     }
 
     private fun initRecyclerView() {
-        recyclerView = findViewById<View>(R.id.recycler_view) as RecyclerView
-        recyclerView!!.adapter = adapter
-        recyclerView!!.layoutManager = GridLayoutManager(this, 3)
+        recycler_view?.adapter = adapter
+        recycler_view?.layoutManager = GridLayoutManager(this, 3)
 
     }
 
     fun clearData() {
-        adapter!!.clear()
+        adapter?.clear()
     }
 
     private fun fillData(data: List<Any>) {
-        adapter!!.append(data)
+        adapter?.append(data)
     }
 }
