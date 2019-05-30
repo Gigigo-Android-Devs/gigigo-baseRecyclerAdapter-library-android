@@ -3,23 +3,23 @@ package com.gigigo.baserecycleradapter.debouncedlisteners
 import android.os.SystemClock
 import android.view.View
 
-internal class DebouncedClickHandler(
-    private val debouncedOnClickListener: DebouncedListener,
-    intervalMillis: Long? = MINIMUM_INTERVAL_MILLIS
+open class DebouncedClickHandler(
+    intervalMillis: Long? = MINIMUM_INTERVAL_MILLIS,
+    private val debouncedOnClickListener: (Int, View) -> Boolean
 ) {
 
-    private var intervalMillis = MINIMUM_INTERVAL_MILLIS
-    private var previousClickTimestamp: Long = 0
+    var intervalMillis = MINIMUM_INTERVAL_MILLIS
+    var previousClickTimestamp: Long = 0
 
     init {
         intervalMillis?.let { this.intervalMillis = it }
     }
 
-    fun invokeDebouncedClick(position: Int, view: View): Boolean {
+    fun invoke(position: Int, view: View): Boolean {
         val currentTimestamp = SystemClock.uptimeMillis()
         var handled = false
         if (currentTimestamp - previousClickTimestamp > intervalMillis) {
-            handled = debouncedOnClickListener.onDebouncedClick(view, position)
+            handled = debouncedOnClickListener.invoke(position, view)
             previousClickTimestamp = currentTimestamp
         }
         return handled

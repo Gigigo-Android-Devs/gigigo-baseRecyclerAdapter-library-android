@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.gigigo.baserecycleradapter.debouncedlisteners.DebouncedClickHandler
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolder
 import com.gigigo.baserecycleradapter.viewholder.BaseViewHolderFactory
 import com.gigigo.baserecycleradapter.viewholder.OnItemClickListener
@@ -23,10 +24,11 @@ class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFacto
     private var itemClickListener: OnItemClickListener? = null
     private var itemLongClickListener: OnItemLongClickListener? = null
     private var itemDragListener: OnItemDragListener? = null
-    private var millisIntervalToAvoidDoubleClick: Long = 0
+    private var millisIntervalToAvoidDoubleClick: Long? = null
 
     constructor(context: Context) : this(BaseViewHolderFactory(context)) {}
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Data> {
         var index = viewType
         if (!isValidIndex(viewType)) {
@@ -63,15 +65,23 @@ class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFacto
         viewHolderFactory.bind<Data, ViewHolder>()
     }
 
-    fun setItemClickListener(onItemClick: (Int, View) -> Unit) {
-        itemClickListener = { position: Int, view: View ->
-            if (isValidIndex(position)) {
-                onItemClick(position, view)
+    fun setItemClickListener(onItemClick: OnItemClickListener) {
+        val debouncedClickHandler =
+            DebouncedClickHandler(millisIntervalToAvoidDoubleClick) { position, view ->
+                if (isValidIndex(position)) {
+                    onItemClick(position, view)
+                    true
+                } else {
+                    false
+                }
             }
+
+        itemClickListener = { position: Int, view: View ->
+            debouncedClickHandler.invoke(position, view)
         }
     }
 
-    fun setItemLongClickListener(onItemLongClick: (Int, View) -> Boolean) {
+    fun setItemLongClickListener(onItemLongClick: OnItemLongClickListener) {
         itemLongClickListener = { position: Int, view: View ->
             if (isValidIndex(position)) {
                 onItemLongClick(position, view)
@@ -82,7 +92,7 @@ class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFacto
         }
     }
 
-    fun setItemDragListener(onItemDragClick: (Int, View) -> Boolean) {
+    fun setItemDragListener(onItemDragClick: OnItemDragListener) {
         itemDragListener = { position: Int, view: View ->
             if (isValidIndex(position)) {
                 onItemDragClick(position, view)

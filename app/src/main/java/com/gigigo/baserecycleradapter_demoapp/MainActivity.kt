@@ -18,9 +18,9 @@ import com.gigigo.baserecycleradapter_demoapp.viewholder.ImageViewHolder
 import com.gigigo.baserecycleradapter_demoapp.viewholder.TextViewHolder
 import com.gigigo.ui.imageloader.ImageLoader
 import com.gigigo.ui.imageloader.glide.GlideImageLoaderImp
+import kotlinx.android.synthetic.main.activity_main.recycler_view
 
 class MainActivity : AppCompatActivity() {
-    private var recyclerView: RecyclerView? = null
     private var adapter: BaseRecyclerAdapter<Any>? = null
 
     var imageLoader: ImageLoader? = null
@@ -84,17 +84,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        recyclerView = findViewById<View>(R.id.recycler_view) as RecyclerView
-        recyclerView!!.adapter = adapter
-        recyclerView!!.layoutManager = GridLayoutManager(this, 3)
+        recycler_view?.adapter = adapter
+        recycler_view?.layoutManager = GridLayoutManager(this, 3)
 
     }
 
     fun clearData() {
-        adapter!!.clear()
+        adapter?.clear()
     }
 
     private fun fillData(data: List<Any>) {
-        adapter!!.append(data)
+        adapter?.append(data)
     }
 }
