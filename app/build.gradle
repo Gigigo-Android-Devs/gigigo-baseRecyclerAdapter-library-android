@@ -12,7 +12,7 @@ android {
         applicationId "com.gigigo.baserecycleradapter_demoapp"
 
         versionCode generateAutoVersionCode()
-        versionName generateVersionName([major: 2, minor: 2, patch: 1])
+        versionName generateVersionName([major: 2, minor: 3, patch: 0])
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
