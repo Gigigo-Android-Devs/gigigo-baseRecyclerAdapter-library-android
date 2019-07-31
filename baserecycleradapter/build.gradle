@@ -11,7 +11,7 @@ android {
     targetSdkVersion androidSdk.target
 
     versionCode generateAutoVersionCode()
-    versionName generateVersionName([major:2, minor:3, patch:0])
+    versionName generateVersionName([major:2, minor:3, patch:1])
   }
   buildTypes {
     release {
