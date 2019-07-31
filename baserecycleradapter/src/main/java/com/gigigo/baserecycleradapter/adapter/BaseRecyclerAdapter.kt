@@ -31,7 +31,7 @@ class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFacto
     @Suppress("UNCHECKED_CAST")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Data> {
         var index = viewType
-        if (!isValidIndex(viewType)) {
+        if (!isValidIndexClassType(viewType)) {
             index = 0
             Log.w("BaseRecyclerAdapter", "onCreateViewHolder() invalid type")
         }
@@ -50,7 +50,7 @@ class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFacto
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (isValidIndex(position)) {
+        return if (isValidIndexClassType(position)) {
             valueClassTypes.indexOf(_data[position].javaClass)
         } else {
             Log.w("BaseRecyclerAdapter", "getItemViewType invalid index position $position")
@@ -169,7 +169,9 @@ class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFacto
         this.millisIntervalToAvoidDoubleClick = millisIntervalToAvoidDoubleClick
     }
 
-    private fun isValidIndex(position: Int): Boolean = position in 0..valueClassTypes.size
+    private fun isValidIndex(position: Int): Boolean = position in 0..itemCount
+        
+    private fun isValidIndexClassType(position: Int): Boolean = position in 0..valueClassTypes.size
 
     private fun bindListeners(viewHolder: BaseViewHolder<Data>?) {
         viewHolder?.apply {
