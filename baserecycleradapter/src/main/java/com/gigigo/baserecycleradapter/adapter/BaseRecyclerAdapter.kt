@@ -50,7 +50,7 @@ class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFacto
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (isValidIndexClassType(position)) {
+        return if (isValidIndex(position)) {
             valueClassTypes.indexOf(_data[position].javaClass)
         } else {
             Log.w("BaseRecyclerAdapter", "getItemViewType invalid index position $position")
