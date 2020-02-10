@@ -13,7 +13,7 @@ import com.gigigo.baserecycleradapter.viewholder.OnItemDragListener
 import com.gigigo.baserecycleradapter.viewholder.OnItemLongClickListener
 import java.util.*
 
-class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFactory) :
+open class BaseRecyclerAdapter<Data : Any>(val viewHolderFactory: BaseViewHolderFactory) :
     RecyclerView.Adapter<BaseViewHolder<Data>>() {
 
     val valueClassTypes = ArrayList<Class<*>>()
